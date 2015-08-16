@@ -119,7 +119,7 @@
 	margin: 0;
 	padding: 40px;
 	padding-bottom: 40px;
-	margin-top: 10%;
+	/*margin-top: 10%;*/
 }
 .footer p{
 	font-size: 1.2em;
@@ -142,7 +142,8 @@
 .login{
 	margin: 0;
 	padding: 20px;
-	margin-top: 5%
+	margin-top: 5%;
+	margin-bottom:5%;
 }
 .login .frm-login{
 	background-color: #ecf0f1;
@@ -165,3 +166,58 @@
 	color: #FFF;
 }
 /* Fin Login */
+
+/*  Pnanel admin  */
+.menu-panel{
+	margin: 20px;
+}
+
+.menu-panel .item-menu-panel{
+	background-color: #ecf0f1;
+	padding: 12px;
+}
+.menu-panel .item-menu-panel i{
+	padding: 6px;
+	margin-right: 6px;
+	color: #FFF;
+	border-radius: 50%;
+	background-color: #f39c12;
+}
+
+.menu-panel .item-menu-panel a{
+	padding: 6px;
+	font-size: 1.1em;
+	text-transform: uppercase;
+	/*text-decoration: underline;*/
+}
+.menu-panel .item-menu-panel a:hover{
+	background-color: #bdc3c7;
+	text-decoration: none;
+}
+
+.item-panel{
+	text-align: center;
+	margin: 0;
+	padding: 20px;
+	padding-bottom: 0;
+}
+
+.item-panel i{
+	font-size: 3.8em;
+	color: #16a085;
+	padding-bottom: 8px;
+}
+.item-panel p{
+	color: #f39c12;
+	font-size: 1.8em;
+	padding: 0;
+	margin: 0;
+}
+.admin{
+	margin: 20px;
+}
+
+.admin .new-menu{
+	margin-bottom: 10px;
+}
+/* Fin Pnanel admin  */

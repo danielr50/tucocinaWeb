@@ -34,6 +34,11 @@ app.config(function($stateProvider, $authProvider, $urlRouterProvider){
 			controller: 'homeController'
 		})
 
+		.state('panel',{
+			url: '/panel',
+			templateUrl:'partials/panel.html'
+		})
+
 		.state('login', {
 			url: '/login',
 			templateUrl: 'partials/login.html',

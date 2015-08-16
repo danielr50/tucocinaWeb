@@ -1,0 +1,319 @@
+<div class="row item-panel">
+	<div class="col-md-12">
+		<div class="col-md-4">
+			<i class="fa fa-coffee"></i>
+			<p>5</p>
+		</div>
+
+		<div class="col-md-4">
+			<i class="fa fa-calendar-check-o"></i>
+			<p>10</p>
+		</div>
+
+		<div class="col-md-4">
+			<i class="fa fa-laptop"></i>
+			<p>20</p>
+		</div>
+	</div>
+</div>
+
+<div class="row menu-panel">
+ 	<div class="col-md-12">
+ 		<div class="item-menu-panel">
+ 			<a href=""><i class="fa fa-cutlery"></i>Gestionar Menú</a>
+ 			<a href=""><i class="fa fa-calendar-check-o"></i>Control de Pedidios</a>
+ 		</div>
+ 	</div>
+</div>
+
+<div class="row admin">
+	<div class="col-md-12">
+		<div class="panel panel-primary">
+			<div class="panel-heading">Panel de administración</div>
+			<div class="panel-body">
+				<button class="btn btn-success btn-md new-menu" data-toggle="modal" data-target="#add-plato">Crear Plato</button>
+				<div class="panel panel-default">
+					<div class="panel-heading">Listado de platos</div>
+					<div class="panel-body">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Nombre</th>
+									<th>Precio</th>
+									<th>Ingredientes</th>
+									<th>Estado</th>
+									<th>Editar menu</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>Hamburguesa Doble</td>
+									<td><span class="label label-success">$20.000</span></td>
+									<td><a href="" data-toggle="modal" data-target="#ingredientes">Ingredientes</a></td>
+									<td><span class="label label-success">Disponible</span></td>
+									<td><button class="btn btn-success btn-sm" data-toggle="modal" data-target="#edit-plato">Editar</button></td>
+								</tr>
+
+								<tr>
+									<td>2</td>
+									<td>Hamburguesa Doble</td>
+									<td><span class="label label-success">$20.000</span></td>
+									<td><a href="" data-toggle="modal" data-target="#ingredientes">Ingredientes</a></td>
+									<td><span class="label label-danger">Deshabilitado</span></td>
+									<td><button class="btn btn-success btn-sm" data-toggle="modal" data-target="#edit-plato">Editar</button></td>
+								</tr>
+
+								<tr>
+									<td>3</td>
+									<td>Hamburguesa Doble</td>
+									<td><span class="label label-success">$20.000</span></td>
+									<td><a href="" data-toggle="modal" data-target="#ingredientes">Ingredientes</a></td>
+									<td><span class="label label-warning">Inactivo</span></td>
+									<td><button class="btn btn-success btn-sm" data-toggle="modal" data-target="#edit-plato">Editar</button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal" id="add-plato">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Crear nuevo plato</h4>
+            </div>
+            <div class="modal-body">
+                <!-- <p>Actualizar plato</p> -->
+                <form>
+                	<div class="form-group">
+                		<label for="nombre">Nombre</label>
+                		<input type="text" class="form-control" id="nombre" />
+                	</div>
+
+                	<div class="form-group">
+                		<label for="precio">Precio</label>
+                		<input type="text" class="form-control" id="precio" />
+                	</div>
+
+                	<div class="form-group">
+                		<label for="estado">Estado</label>
+                		<input type="text" class="form-control" id="estado" />
+                	</div>
+                </form>
+
+                <div class="panel panel-default">
+                	<div class="panel-heading">Ingredientes</div>
+                	<div class="panel-body">
+                		<button class="btn btn-success" data-toggle="modal" data-target="#add-ingrediente">Agregar ingrediente</button>
+                		<table class="table">
+                			<thead>
+                				<tr>
+                					<th>#</th>
+                					<th>Nombre</th>
+                					<th>Cantidad</th>
+                					<th>Tipo</th>
+                				</tr>
+                			</thead>
+                			<tbody>
+                				<tr>
+                					
+                				</tr>
+                			</tbody>
+                		</table>
+                	</div>
+                </div>
+
+               	<div class="alert alert-dismissable alert-success" ng-show="ver">
+				    <button type="button" class="close" data-dismiss="alert">×</button>
+				    <strong>{{respuesta}} </strong>
+				</div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="addDomisiliario()">Guardar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="add-ingrediente">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Crear nuevo ingrediente</h4>
+            </div>
+            <div class="modal-body">
+                <!-- <p>Actualizar plato</p> -->
+
+                <div class="panel panel-default">
+                	<div class="panel-heading">Ingredientes</div>
+                	<div class="panel-body">
+		                <form>
+		                	<div class="form-group">
+		                		<label for="nombre">Nombre</label>
+		                		<input type="text" class="form-control" id="nombre" />
+		                	</div>
+
+		                	<div class="form-group">
+		                		<label for="cantidad">Cantidad</label>
+		                		<input type="text" class="form-control" id="cantidad" />
+		                	</div>
+
+		                	<div class="form-group">
+		                		<label for="tipo">Tipo</label>
+		                		<input type="text" class="form-control" id="tipo" />
+		                	</div>
+		                </form>
+                	</div>
+                </div>
+
+               	<div class="alert alert-dismissable alert-success" ng-show="ver">
+				    <button type="button" class="close" data-dismiss="alert">×</button>
+				    <strong>{{respuesta}} </strong>
+				</div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="addDomisiliario()">Guardar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" id="edit-plato">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Editar plato</h4>
+            </div>
+            <div class="modal-body">
+                <p>Actualizar plato</p>
+                <form>
+                	<div class="form-group">
+                		<label for="nombre">Nombre</label>
+                		<input type="text" class="form-control" id="nombre" />
+                	</div>
+
+                	<div class="form-group">
+                		<label for="precio">Precio</label>
+                		<input type="text" class="form-control" id="precio" />
+                	</div>
+
+                	<div class="form-group">
+                		<label for="estado">Estado</label>
+                		<input type="text" class="form-control" id="estado" />
+                	</div>
+                </form>
+
+                <div class="panel panel-default">
+                	<div class="panel-heading">Listado de ingredientes</div>
+                	<div class="panel-body">
+                		<table class="table">
+                			<thead>
+                				<tr>
+                					<th>#</th>
+                					<th>Nombre</th>
+                					<th>Cantidad</th>
+                					<th>Tipo</th>
+                					<th>Editar</th>
+                				</tr>
+                			</thead>
+                			<tbody>
+                				<tr>
+                					<td>1</td>
+                					<td>Queso</td>
+                					<td>5</td>
+                					<td>Semi duro</td>
+                					<td><button class="btn btn-success btn-sm">Editar</button></td>
+                				</tr>
+
+                				<tr>
+                					<td>1</td>
+                					<td>Queso</td>
+                					<td>5</td>
+                					<td>Semi duro</td>
+                					<td><button class="btn btn-success btn-sm">Editar</button></td>
+                				</tr>
+                			</tbody>
+                		</table>
+                	</div>
+                </div>
+
+               	<div class="alert alert-dismissable alert-success" ng-show="ver">
+				    <button type="button" class="close" data-dismiss="alert">×</button>
+				    <strong>{{respuesta}} </strong>
+				</div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="addDomisiliario()">Actualizar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" id="ingredientes">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Ingredientes</h4>
+            </div>
+            <div class="modal-body">
+                <!-- <p>Actualizar plato</p> -->
+                <div class="panel panel-default">
+                	<div class="panel-heading">Listado de ingredientes</div>
+                	<div class="panel-body">
+                		<table class="table">
+                			<thead>
+                				<tr>
+                					<th>#</th>
+                					<th>Nombre</th>
+                					<th>Cantidad</th>
+                					<th>Tipo</th>
+                					<th>Editar</th>
+                				</tr>
+                			</thead>
+                			<tbody>
+                				<tr>
+                					<td>1</td>
+                					<td>Queso</td>
+                					<td>5</td>
+                					<td>Semi duro</td>
+                					<td><button class="btn btn-success btn-sm">Editar</button></td>
+                				</tr>
+
+                				<tr>
+                					<td>1</td>
+                					<td>Queso</td>
+                					<td>5</td>
+                					<td>Semi duro</td>
+                					<td><button class="btn btn-success btn-sm">Editar</button></td>
+                				</tr>
+                			</tbody>
+                		</table>
+                	</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-primary" ng-click="addDomisiliario()">Actualizar</button> -->
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
