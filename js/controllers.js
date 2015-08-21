@@ -109,7 +109,13 @@ function upload (form) {
 }]); // fin controlador signup
 
 // controlador para el panel
-app.controller('panelController', ['$scope', '$http', function($scope, $http){
+app.controller('panelController', ['$scope', '$http', 'Socket', function($scope, $http, Socket){
+	
+	Socket.on('categoria', function(categoria) {
+    	console.log(categoria);
+    	// $scope.categoriaadd = categoria.nombreCategoria;
+	});
+
 	// cargar todas las categorias
 	$http.get('http://localhost:8000/api/categorias')
 		.success(function(data){
@@ -172,13 +178,15 @@ app.controller('panelController', ['$scope', '$http', function($scope, $http){
 
 	// function para agregar una categoria
 	$scope.addCategoria = function(){
+		console.log('Categoria');
 		var categoria = {
 			nombreCategoria: $scope.nombreCategoria
 		};
 		// petición POST al API
 		$http.post('http://localhost:8000/api/categorias', categoria)
 			.success(function(data){
-				console.log(data.categoria);
+				// console.log(data.categoria);
+				console.log('Se agrego categoria AQUI');
 			})
 			.error(function(err){
 				console.log(err);
