@@ -1,0 +1,44 @@
+<div class="row login">
+	<div class="col-md-12"> 
+		<div class="frm-login col-md-4 col-lg-3">
+			<h2>Registro de restaurantes</h2>
+			<div class="frm">
+				<form>
+					<div class="form-group">
+						<label>Usuario</label>
+						<input ng-model="signup.usuario" type="text" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label>Password</label>
+						<input ng-model="signup.password" type="password" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label>Nombre</label>
+						<input ng-model="signup.nombreRestaurante" type="text" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label>Nit</label>
+						<input ng-model="signup.nit" type="text" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label>Tipo establecimiento</label>
+						<input ng-model="signup.tipoEstablecimiento" type="text" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label>Mesas para reserva</label>
+						<input ng-model="signup.numMesaReserva" type="text" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label>Logo</label>
+						<input file-model="signup.logo" type="file" class="form-control" />
+					</div>
+					<button ng-click="signup.signup()" class="btn">Registrar</button>
+				</form>
+			</div>
+			<div class="alert alert-dismissable alert-success" ng-show="ver">
+			    <button type="button" class="close" data-dismiss="alert">×</button>
+			    <strong>{{respuesta}} </strong>
+			</div>
+		</div>
+	</div>
+</div>
