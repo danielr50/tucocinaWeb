@@ -87,7 +87,7 @@
                                         <td>{{plato.nombrePlato}}</td>
     									<td>{{plato.descripcion}}</td>
     									<td><span class="label label-success">${{plato.valor}}</span></td>
-    									<td><a href="" data-toggle="modal" data-target="#ingredientes">Ingredientes</a></td>
+    									<td><a href="" ng-click="ingredientesLoad(plato._id)" data-toggle="modal" data-target="#ingredientes">Ingredientes</a></td>
     									<td><span class="label label-success">{{plato.estado}}</span></td>
     									<td><button class="btn btn-success btn-sm" data-toggle="modal" data-target="#edit-plato">Editar</button></td>
     								</tr>
@@ -376,15 +376,9 @@
                 				</tr>
                 			</thead>
                 			<tbody>
-                				<tr>
-                					<td>1</td>
-                					<td>Queso</td>
-                					<td><button class="btn btn-success btn-sm">Editar</button></td>
-                				</tr>
-
-                				<tr>
-                					<td>2</td>
-                					<td>Queso</td>
+                				<tr ng-repeat="ingrediente in ingredientes">
+                					<td>{{$index+1}}</td>
+                					<td>{{ingrediente.nombreIngrediente}}</td>
                 					<td><button class="btn btn-success btn-sm">Editar</button></td>
                 				</tr>
                 			</tbody>

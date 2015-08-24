@@ -84,7 +84,7 @@ app.controller('signupController', ['$scope', '$http', function($scope, $http){
 		.success(function(data){
 			$scope.ver = true;
 			$scope.respuesta = 'Datos guardados!';
-			upload(fd);
+			// upload(fd);
 		})
 		.error(function(response){
 			// si ha habido errors, llegaremos a esta función 
@@ -157,7 +157,7 @@ app.controller('panelController', ['$scope', '$http', 'Socket', 'localStorageSer
 				console.log(data.plato);
 				localStorageService.set('idPlato', data.plato._id); //guardo el id del plato en el localstorage para luego agregar ingredientes
 				$scope.ver_ingrediente = true;
-				upload(fd);
+				// upload(fd);
 			})
 			.error(function(err){
 				console.log(err);
@@ -211,6 +211,17 @@ app.controller('panelController', ['$scope', '$http', 'Socket', 'localStorageSer
 			.error(function(err){
 				console.log(err);
 			})
+	}
+
+	$scope.ingredientesLoad = function(idPlato){
+		$http.get('https://api-tucocina.herokuapp.com/api/ingredientes/'+idPlato)
+			.success(function(data){
+				console.log(data);
+				$scope.ingredientes = data;
+			})
+			.error(function(err){
+				console.log(err);
+			});
 	}
 
 }]); //fin controler panel
