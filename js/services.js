@@ -23,6 +23,6 @@ var app = angular.module('tuCosina.services', ['LocalStorageModule', 'btford.soc
 app.factory('Socket', function(socketFactory) {
         return socketFactory({
             prefix: '',
-            ioSocket: io.connect('http://localhost:8000')
+            ioSocket: io.connect('https://api-tucocina.herokuapp.com/')
         });
 });

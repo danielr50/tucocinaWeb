@@ -19,7 +19,7 @@ app.config(function($stateProvider, $authProvider, $urlRouterProvider){
 	$authProvider.withCredentials = false; // Send POST request with credentials
 
 	// parametros de configuracion
-	$authProvider.loginUrl = "http://localhost:8000/auth/login";
+	$authProvider.loginUrl = "https://api-tucocina.herokuapp.com/auth/login";
 
 	// configuración token local
 	$authProvider.tokenName = "token";

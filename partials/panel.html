@@ -186,10 +186,10 @@
                     </div>
                 </form>
 
-                <div class="panel panel-default">
+                <div class="panel panel-default" ng-show="ver_ingrediente">
                 	<div class="panel-heading">Ingredientes</div>
                 	<div class="panel-body">
-                		<button class="btn btn-success" data-toggle="modal" data-target="#add-ingrediente">Agregar ingrediente</button>
+                		<button ng-click="platoEdit()" class="btn btn-success" data-toggle="modal" data-target="#add-ingrediente">Agregar ingrediente</button>
                 		<table class="table">
                 			<thead>
                 				<tr>
@@ -233,10 +233,11 @@
                 <div class="panel panel-default">
                 	<div class="panel-heading">Ingredientes</div>
                 	<div class="panel-body">
+                        <h2>{{plato}}</h2>
 		                <form>
 		                	<div class="form-group">
 		                		<label for="nombre">Nombre</label>
-		                		<input type="text" class="form-control" id="nombre" />
+		                		<input ng-model="nombreIngrediente" type="text" class="form-control" id="nombre" />
 		                	</div>
 		                </form>
                 	</div>
@@ -249,7 +250,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="addDomisiliario()">Guardar</button>
+                <button type="button" class="btn btn-primary" ng-click="addIngrediente(id)">Guardar</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
@@ -262,63 +263,91 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Editar plato</h4>
+                <h4 class="modal-title">Crear nuevo plato</h4>
             </div>
             <div class="modal-body">
-                <p>Actualizar plato</p>
+                <!-- <p>Actualizar plato</p> -->
                 <form>
-                	<div class="form-group">
-                		<label for="nombre">Nombre</label>
-                		<input type="text" class="form-control" id="nombre" />
-                	</div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input ng-model="nombrePlato" type="text" class="form-control" id="nombre" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="valor">Valor</label>
+                            <input ng-model="valor" type="text" class="form-control" id="valor" />
+                        </div>
+                    </div>
 
-                	<div class="form-group">
-                		<label for="precio">Precio</label>
-                		<input type="text" class="form-control" id="precio" />
-                	</div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="cate">Categoría</label>
+                              <select ng-model="categoria" class="form-control" id="cate" ng-options="cate._id as cate.nombreCategoria for cate in categorias">
+                                <option style="display:none" value="">Seleccione</option>
+                               <!--  <option value="Corriente">Corriente</option>
+                                <option value="A la carta">A la carta</option>
+                                <option value="Postre">Postre</option> -->
+                            </select>
+                        </div>
+                    </div>
 
-                	<div class="form-group">
-                		<label for="estado">Estado</label>
-                		<input type="text" class="form-control" id="estado" />
-                	</div>
+                    <div class="col-md-6">   
+                        <div class="form-group">
+                            <label for="estado">Estado</label>
+                              <select ng-model="estado" class="form-control" id="estado">
+                                <option style="display:none" value="">Seleccione</option>
+                                <option value="Habilitado">Habilitado</option>
+                                <option value="Desactivado">Desactivado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="descripcion">Descripción</label>
+                            <!-- <input type="text" class="form-control" id="descripcion" /> -->
+                            <textarea ng-model="descripcion" id="descripcion" class="form-control" cols="6" rows="2" placeholder="Ingrese una descripción del plato"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="imagen">Imagen</label>
+                            <input file-model="imagen" type="file" class="form-control" id="imagen" />
+                        </div>
+                    </div>
                 </form>
 
                 <div class="panel panel-default">
-                	<div class="panel-heading">Listado de ingredientes</div>
-                	<div class="panel-body">
-                		<table class="table">
-                			<thead>
-                				<tr>
-                					<th>#</th>
-                					<th>Nombre</th>
-                					<th>Editar</th>
-                				</tr>
-                			</thead>
-                			<tbody>
-                				<tr>
-                					<td>1</td>
-                					<td>Queso</td>
-                					<td><button class="btn btn-success btn-sm">Editar</button></td>
-                				</tr>
-
-                				<tr>
-                					<td>1</td>
-                					<td>Queso</td>
-                					<td><button class="btn btn-success btn-sm">Editar</button></td>
-                				</tr>
-                			</tbody>
-                		</table>
-                	</div>
+                    <div class="panel-heading">Ingredientes</div>
+                    <div class="panel-body">
+                        <button class="btn btn-success" data-toggle="modal" data-target="#add-ingrediente">Agregar ingrediente</button>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
-               	<div class="alert alert-dismissable alert-success" ng-show="ver">
-				    <button type="button" class="close" data-dismiss="alert">×</button>
-				    <strong>{{respuesta}} </strong>
-				</div>
+                <div class="alert alert-dismissable alert-success" ng-show="ver">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{respuesta}} </strong>
+                </div>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Actualizar</button>
+                <button type="button" class="btn btn-primary" ng-click="addPlato()">Guardar</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>

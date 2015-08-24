@@ -80,7 +80,7 @@ app.controller('signupController', ['$scope', '$http', function($scope, $http){
 			numMesaReserva: vm.numMesaReserva,
 			logo: file.name
 	    };
-	    $http.post('http://localhost:8000/api/restaurantes', restaurante)
+	    $http.post('https://api-tucocina.herokuapp.com/api/restaurantes', restaurante)
 		.success(function(data){
 			$scope.ver = true;
 			$scope.respuesta = 'Datos guardados!';
@@ -109,15 +109,15 @@ function upload (form) {
 }]); // fin controlador signup
 
 // controlador para el panel
-app.controller('panelController', ['$scope', '$http', 'Socket', function($scope, $http, Socket){
-	
+app.controller('panelController', ['$scope', '$http', 'Socket', 'localStorageService', function($scope, $http, Socket, localStorageService){
+	$scope.ver_ingrediente = false;
 	Socket.on('categoria', function(categoria) {
     	console.log(categoria);
     	// $scope.categoriaadd = categoria.nombreCategoria;
 	});
 
 	// cargar todas las categorias
-	$http.get('http://localhost:8000/api/categorias')
+	$http.get('https://api-tucocina.herokuapp.com/api/categorias')
 		.success(function(data){
 			$scope.categorias = data;
 		})
@@ -126,7 +126,7 @@ app.controller('panelController', ['$scope', '$http', 'Socket', function($scope,
 		})
 
 	// cargar todos los platos
-	$http.get('http://localhost:8000/api/platos')
+	$http.get('https://api-tucocina.herokuapp.com/api/platos')
 		.success(function(data){
 			$scope.platos = data;
 		})
@@ -152,16 +152,36 @@ app.controller('panelController', ['$scope', '$http', 'Socket', function($scope,
 		};
 
 		// Peticion POST al API
-		$http.post('http://localhost:8000/api/platos', plato)
+		$http.post('https://api-tucocina.herokuapp.com/api/platos', plato)
 			.success(function(data){
 				console.log(data.plato);
-				// $scope.platos = data.plato;
+				localStorageService.set('idPlato', data.plato._id); //guardo el id del plato en el localstorage para luego agregar ingredientes
+				$scope.ver_ingrediente = true;
 				upload(fd);
 			})
 			.error(function(err){
 				console.log(err);
 			})
 	}//fin addPlato
+
+	// funcion para agregar un ingrediente a un plato por medio de su ID
+	$scope.addIngrediente = function(){
+		var id = localStorageService.get('idPlato');
+		console.log(id);
+		var ingrediente = {
+			nombreIngrediente: $scope.nombreIngrediente,
+			idPlato: id
+		};
+
+		$http.post('https://api-tucocina.herokuapp.com/api/ingredientes', ingrediente)
+			.success(function(data){
+				console.log(data);
+				console.log('Se agregó correctamente');
+			})
+			.error(function(err){
+				console.log(err);
+			})
+	}// fin addIngrediente
 
 	// funcion para guardar la imagen del plato
 	function upload (form) {
@@ -183,7 +203,7 @@ app.controller('panelController', ['$scope', '$http', 'Socket', function($scope,
 			nombreCategoria: $scope.nombreCategoria
 		};
 		// petición POST al API
-		$http.post('http://localhost:8000/api/categorias', categoria)
+		$http.post('https://api-tucocina.herokuapp.com/api/categorias', categoria)
 			.success(function(data){
 				// console.log(data.categoria);
 				console.log('Se agrego categoria AQUI');
@@ -192,6 +212,7 @@ app.controller('panelController', ['$scope', '$http', 'Socket', function($scope,
 				console.log(err);
 			})
 	}
+
 }]); //fin controler panel
 
 
