@@ -2,15 +2,15 @@
 .barra-navegacion{
 	margin: 0;
 	padding: 0;
-	background-color: #008db1 !important;
+	background-color: #f5f5f5 !important;
 	border: none !important;
 	width: 100% !important;
 }
 .barra-navegacion a{
-	color: #FFF !important;
+	color: black !important;
 }
 .barra-navegacion a:hover{
-	color: #ecf0f1 !important;
+	color: #2c3e50 !important;
 }
 .logo{
 	padding: 0;
@@ -23,6 +23,7 @@
 .menu-header{
 	float: right;
 }
+
 /*fin barra navegacion*/
 
 /*header*/
@@ -42,9 +43,10 @@
 }
 
 .botones-app p{
-	font-family: 'Fjalla One', sans-serif;
-	color:white;
+	font-family: 'Open Sans', sans-serif;
+	color:#fff;
 	font-size: 250%;
+	margin-top: 25%;
 }
 .botones-app img{
 	width: 120px;
@@ -235,6 +237,9 @@
 /*formulario de contacto*/
 .formulario{
 	margin-bottom:  50%;
+}
+.espacio {
+	padding-bottom: 50px;
 }
 /*Fin de formulario*/
 
