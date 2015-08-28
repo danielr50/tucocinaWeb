@@ -1,4 +1,4 @@
-/*barra navegacion*/
+  /*barra navegacion*/
 .barra-navegacion{
 	margin: 0;
 	padding: 0;
@@ -37,12 +37,13 @@
 	padding-top: 38px;
 	text-align: center;
 }
-.img-iphone img{
-	margin-bottom: 20px;
+.img-tablet img{
+	margin-bottom: 50%;
+	width: 500px;
 }
 .botones-app img{
 	width: 120px;
-	padding: 4px;
+	padding: 4px;			
 }
 /*fin header*/
 
@@ -223,6 +224,6 @@
 
 .imagen-plato{
 	width: 120px;
-}
+}2
 /* Fin Pnanel admin  */
 
