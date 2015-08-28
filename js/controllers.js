@@ -183,6 +183,26 @@ app.controller('panelController', ['$scope', '$http', 'Socket', 'localStorageSer
 			})
 	}// fin addIngrediente
 
+		// funcion para agregar un adicional a un plato por medio de su ID
+	$scope.addAdicional = function(){
+		var id = localStorageService.get('idPlato');
+		console.log(id);
+		var adicional = {
+			nombreAdicional: $scope.nombreAdicional,
+			valor: $scope.valor,
+			idPlato: id
+		};
+
+		$http.post('https://api-tucocina.herokuapp.com/api/adicionales', adicional)
+			.success(function(data){
+				console.log(data);
+				console.log('Se agregó correctamente');
+			})
+			.error(function(err){
+				console.log(err);
+			})
+	}// fin addAdicional
+
 	// funcion para guardar la imagen del plato
 	function upload (form) {
 		$http.post('http://localhost:3000/uploads.php',form, {
@@ -218,6 +238,18 @@ app.controller('panelController', ['$scope', '$http', 'Socket', 'localStorageSer
 			.success(function(data){
 				console.log(data);
 				$scope.ingredientes = data;
+			})
+			.error(function(err){
+				console.log(err);
+			});
+	}
+
+
+	$scope.adicionalesLoad = function(idPlato){
+		$http.get('https://api-tucocina.herokuapp.com/api/adicionales/'+idPlato)
+			.success(function(data){
+				console.log(data);
+				$scope.adicionales = data;
 			})
 			.error(function(err){
 				console.log(err);

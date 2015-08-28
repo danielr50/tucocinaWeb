@@ -74,7 +74,9 @@
     									<th>Nombre</th>
                                         <th>Descripción</th>
     									<th>Valor</th>
-    									<th>Ingredientes</th>
+                                        <th>Categoría</th>
+                                        <th>Ingredientes</th>
+    									<th>Adicionales</th>
     									<th>Estado</th>
     									<th>Editar</th>
     								</tr>
@@ -87,7 +89,9 @@
                                         <td>{{plato.nombrePlato}}</td>
     									<td>{{plato.descripcion}}</td>
     									<td><span class="label label-success">${{plato.valor}}</span></td>
+                                        <td>{{plato.idCategoria.nombreCategoria}}</td>
     									<td><a href="" ng-click="ingredientesLoad(plato._id)" data-toggle="modal" data-target="#ingredientes">Ingredientes</a></td>
+                                        <td><a href="" ng-click="adicionalesLoad(plato._id)" data-toggle="modal" data-target="#adicionales">Adicionales</a></td>
     									<td><span class="label label-success">{{plato.estado}}</span></td>
     									<td><button class="btn btn-success btn-sm" data-toggle="modal" data-target="#edit-plato">Editar</button></td>
     								</tr>
@@ -205,6 +209,26 @@
                 		</table>
                 	</div>
                 </div>
+                 <div class="panel panel-default" ng-show="ver_ingrediente">
+                    <div class="panel-heading">Adicionales</div>
+                    <div class="panel-body">
+                        <button class="btn btn-success" data-toggle="modal" data-target="#add-adicional">Agregar adicional</button>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
                	<div class="alert alert-dismissable alert-success" ng-show="ver">
 				    <button type="button" class="close" data-dismiss="alert">×</button>
@@ -251,6 +275,46 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" ng-click="addIngrediente(id)">Guardar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="add-adicional">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Crear nuevo adicional</h4>
+            </div>
+            <div class="modal-body">
+                <!-- <p>Actualizar plato</p> -->
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Adicional</div>
+                    <div class="panel-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="nombre">Nombre</label>
+                                <input ng-model="nombreAdicional" type="text" class="form-control" id="nombre" />
+                            </div>
+                             <div class="form-group">
+                                <label for="nombre">valor</label>
+                                <input ng-model="valor" type="text" class="form-control" id="nombre" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="alert alert-dismissable alert-success" ng-show="ver">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{respuesta}} </strong>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="addAdicional(id)">Guardar</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
@@ -393,3 +457,55 @@
         </div>
     </div>
 </div>
+
+<div class="modal" id="adicionales">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Adicionales</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="form-group">
+                        <label >Nombre</label>
+                        <input type="text" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Valor</label>
+                        <input type="text" class="form-control" />
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Listado de adicionales</div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre</th>
+                                    <th>valor</th>
+                                    <th>Editar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="adicional in adicionales">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{adicional.nombreAdicional}}</td>
+                                    <td>{{adicional.valor}}</td>
+                                    <td><button class="btn btn-success btn-sm">Editar</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-primary" ng-click="addDomisiliario()">Actualizar</button> -->
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
