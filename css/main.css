@@ -173,8 +173,11 @@
 	background-color: #e67e22;
 	color: #FFF;
 }
-.centrado{
- margin-left:450px;
+.centradologin{
+  margin: auto; max-width: 300px;
+}
+.centradosignup{
+	  margin: auto; max-width: 500px;
 }
 /* Fin Login */
 
