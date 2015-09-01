@@ -8,6 +8,7 @@
 }
 .barra-navegacion a{
 	color: black !important;
+
 }
 .barra-navegacion a:hover{
 	color: #2c3e50 !important;
@@ -24,11 +25,15 @@
 	float: right;
 }
 
+
 /*fin barra navegacion*/
 
 /*header*/
 .header{
 	background: url(../public/img/header.jpg) no-repeat center;
+	background-size: cover;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
 	width: 100%;
 	height: 580px;
 	/*	margin: 0;
@@ -37,16 +42,20 @@
 .content-header{
 	padding-top: 38px;
 	text-align: center;
+	padding-top: 90px;
 }
 .img-tablet img{
 	width: 500px;
+}
+.espacio-tablet{
+	margin-left: 22px;
 }
 
 .botones-app p{
 	font-family: 'Open Sans', sans-serif;
 	color:#fff;
 	font-size: 250%;
-	margin-top: 10%;
+	margin-top: 2%;
 }
 .botones-app img{
 	width: 120px;
@@ -120,14 +129,14 @@
 /* Fin Como funciona */
 
 
+
 /* footer */
 .footer{
 	background-color: #003748;
 	color: #FFF;
-	margin: 0;
 	padding: 40px;
-	padding-bottom: 40px;
 	/*margin-top: 10%;*/
+
 }
 .footer p{
 	font-size: 1.2em;
@@ -175,9 +184,11 @@
 }
 .centradologin{
   margin: auto; max-width: 300px;
+  padding-top: 76px;
 }
 .centradosignup{
 	  margin: auto; max-width: 500px;
+	   padding-top: 76px;
 }
 /* Fin Login */
 
@@ -248,3 +259,4 @@
 	padding-bottom: 50px;
 }
 /*Fin de formulario*/
+

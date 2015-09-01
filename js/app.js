@@ -56,4 +56,3 @@ app.config(function($stateProvider, $authProvider, $urlRouterProvider){
 		$urlRouterProvider.otherwise('/');
 
 });
-
