@@ -1,0 +1,73 @@
+<!-- <div class="row item-panel">
+	<div class="col-md-12">
+		<div class="col-md-4">
+			<i class="fa fa-coffee"></i>
+			<p>5</p>
+		</div>
+
+		<div class="col-md-4">
+			<i class="fa fa-calendar-check-o"></i>
+			<p>10</p>
+		</div>
+
+		<div class="col-md-4">
+			<i class="fa fa-laptop"></i>
+			<p>20</p>
+		</div>
+	</div>
+</div>
+ -->
+ <audio id="sound">
+ 	<source src='http://upload.wikimedia.org/wikipedia/commons/c/ce/Sound-of-dog.ogg' type="audio/mp3">
+ </audio>
+
+<div class="row menu-panel">
+ 	<div class="col-md-12">
+ 		<div class="item-menu-panel">
+ 			<a href="#/panel"><i class="fa fa-cutlery"></i>Menú</a>
+            <a href="#/pedidos"><i class="fa fa-calendar-check-o"></i>Pedidios</a>
+            <a href="#/promo"><i class="fa fa-money"></i>Promociones</a>
+            <!-- <a href=""><i class="fa fa-users"></i>Cliente frecuente</a> -->
+ 			<a href=""><i class="fa fa-bar-chart"></i>Informes</a>
+ 		</div>
+ 	</div>
+</div>
+
+
+<div class="row admin">
+	<div class="col-md-12">
+		<div class="panel panel-primary">
+			<div class="panel-heading">Gestión de Pedidos</div>
+			<div class="panel-body">
+				<h1>Gestión de pedidos</h1>
+				<button class="btn btn-success" ng-click="notification()">Habilitar notificaciones</button>
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Plato</th>
+								<th>Mesa</th>
+								<th>Precio</th>
+								<th>Ingredientes</th>
+								<th>Adicionales</th>
+								<th>Accion</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="pedido in pedidos">
+								<td>{{$index + 1}}</td>
+								<td>{{pedido[$index + 1].plato}}</td>
+								<td><span class="badge">{{pedido.mesa}}</span></td>
+								<td><span class="label label-success">${{pedido[$index + 1].precio}}</span></td>
+								<td>{{pedido[$index + 1].ingredientes}}</td>
+								<td>{{pedido[$index + 1].adicionales}}</td>
+								<td><button class="btn btn-warning">Procesar</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
