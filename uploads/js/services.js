@@ -52,20 +52,3 @@ app.factory("Adicionales", function($firebaseArray) {
 	var adicionales = new Firebase("https://tucocina.firebaseio.com/adicionales");
 	return $firebaseArray(adicionales);
 });
-
-// factoria que retorna los pedidos de un restarante - PRUEBAS
-app.factory("Pedidos", function($firebaseArray){
-	var pedidos = new Firebase("https://tucocina.firebaseio.com/pedidos");
-	return $firebaseArray(pedidos);
-});
-
-
-// usuarios
-app.factory("Restaurantes", function($firebaseArray){
-	var rest = new Firebase("https://tucocina.firebaseio.com/restaurantes");
-	return $firebaseArray(rest);
-});
-
-
-
-

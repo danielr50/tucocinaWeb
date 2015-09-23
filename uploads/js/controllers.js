@@ -8,7 +8,7 @@
 */
 
 // modulo principal para los controladores de la aplicación
-app = angular.module('tuCosina.controllers', ['ui.router', 'ngAnimate', 'satellizer', 'LocalStorageModule', 'mgcrea.ngStrap', 'firebase', 'cfp.loadingBar'])
+app = angular.module('tuCosina.controllers', ['ui.router', 'ngAnimate', 'satellizer', 'LocalStorageModule', 'mgcrea.ngStrap', 'firebase'])
 
 // para enviar el token con cada peticion http
 app.config(['$httpProvider', 'satellizer.config', function($httpProvider, config){
@@ -32,141 +32,63 @@ app.config(['$httpProvider', 'satellizer.config', function($httpProvider, config
 
 // controllar para la vista home
 app.controller('homeController', ['$scope', function($scope){
-	$scope.autenticado = function(){
-		console.log('Login');
-		return true;
-	}
+
 }]); // fin controlador home
 
 // controllar para la vista login
-app.controller('loginController', ['$scope', '$auth', '$location', 'localStorageService', '$firebaseAuth', '$firebaseObject', 'firebaseUrl','cfpLoadingBar', function($scope, $auth, $location, localStorageService, $firebaseAuth, $firebaseObject, firebaseUrl, cfpLoadingBar){
+app.controller('loginController', ['$scope', '$auth', '$location', 'localStorageService', function($scope, $auth, $location, localStorageService){
 	var vm = this;
-	$scope.isLoggedIn = false;
-
-	// cfpLoadingBar.start();
-
-	// referencia firebase
-	var ref = new Firebase(firebaseUrl);
-	var authObj = $firebaseAuth(ref);
-
-	//inicializar y obtener estado autenticado actual
-	init();
-
-
-	
-	// definir funcion init()
-	function init(){
-		authObj.$onAuth(authDataCallback);
-		if(authObj.$getAuth()){
-			$scope.isLoggedIn = true;
-			$scope.rol  = "Autoservicio";
-			$location.path('/panel');
-		}
-	}
-
-
-	// authDataCallback es un callback llamado cada vez que el estado de auth cambia 
-	// en login o logout este metodo authDataCallback es llamado
-	function authDataCallback(authData){
-		if(authData){
-			// authData contiene toda la info de este estado que esta autenticado
-			console.log('User '+authData.uid+' esta loggeado con '+authData.provider);
-			vm.isLoggedIn = true;
-			//authData.uid contiene el user id devuelto por el provider eg.facebook
-			var user = $firebaseObject(ref.child('usuarios').child(authData.uid));
-			// checkear en firebase si existe ya el usuario y sino lo creo
-			user.$loaded().then(function(){
-				console.log(user.$id);
-
-				var res = new Firebase("https://tucocina.firebaseio.com/restaurantes/");
-				res.orderByChild("id_user").equalTo(user.$id).on("child_added", function(snapshot) {
-					var rest = snapshot.val();
-					console.log(rest.rol);
-					if (rest.rol === 'autoservicio') {
-						console.log('Eres un restaurante de autoservicios');
-					}else{
-						console.log('Eres un restaurante con meseros');
-						$location.path('/panel');
-					}
-				});
-				// $location.path('/panel');
-			});
-		} else {
-			console.log('User esta logged out');
-			vm.isLoggedIn = false;
-			$location.path('/login');
-		}
-	}
-
-
-
-	// login in firebase
+	// función para lguearse como restaurante en el sistema
 	this.login = function(){
-		var ref = new Firebase("https://tucocina.firebaseio.com");
-		ref.authWithPassword({
-		  email    : vm.email,
-		  password : vm.password
-		}, function(error, authData) {
-		  if (error) {
-		    console.log("Login Failed!", error);
-		  } else {
-		    console.log("Authenticated successfully with payload:", authData);
-		    localStorageService.set('idUser', authData.uid);
+		$auth.login({
+			usuario: vm.usuario,
+			password: vm.password
+		})
+		.then(function(data){
+			// si ha ingresado correctamente, lo tratamos aqui
+			// podemos tambien redigirle a una ruta
+			localStorageService.set('idUser', data.data.userId);
+			console.log(data);
 			$location.path('/panel');
-		  }
+		})
+		.catch(function(response){
+			// si ha habido errores
+			console.log(response);
 		});
-	}
 
-	$scope.autenticated = function(){
-		return true;
 	}
-
 
 }]); //fin controlador login
 
 // controllar para la vista signup
-app.controller('signupController', ['$scope', '$http', 'Restaurantes', 'localStorageService', '$timeout', '$location', function($scope, $http, Restaurantes, localStorageService, $timeout, $location){
+app.controller('signupController', ['$scope', '$http', function($scope, $http){
 	$scope.ver = false;
 
 	var vm = this;
-
-	// signup in firebase
 	this.signup = function(){
-		var ref = new Firebase("https://tucocina.firebaseio.com");
-		ref.createUser({
-		  email    : vm.email,
-		  password : vm.password
-		}, function(error, userData) {
-		  if (error) {
-		    console.log("Error creating user:", error);
-		  } else {
-		    console.log("Successfully created user account with uid:", userData.uid);
-		    localStorageService.set('idUser', userData.uid);
-		    var file = vm.logo;
-		    var fd = new FormData();
-		    fd.append('foto', file);
+		// preparo la imagen
+		var file = vm.logo;
+	    var fd = new FormData();
+	    fd.append('foto', file);
 
-		    var restaurante = {
-		    	id_user: userData.uid,
-				nombreRestaurante: vm.nombreRestaurante,
-				nit: vm.nit,
-				tipoEstablecimiento: vm.tipoEstablecimiento,
-				numMesaReserva: vm.numMesaReserva,
-				rol: 'restaurante',
-				logo: file.name
-	    	};
-
-	    	Restaurantes.$add(restaurante);
-
-		    $scope.ver = true;
+	    var restaurante = {
+	    	usuario: vm.usuario,
+			password: vm.password,
+			nombreRestaurante: vm.nombreRestaurante,
+			nit: vm.nit,
+			tipoEstablecimiento: vm.tipoEstablecimiento,
+			numMesaReserva: vm.numMesaReserva,
+			logo: file.name
+	    };
+	    $http.post('https://api-tucocina.herokuapp.com/api/restaurantes', restaurante)
+		.success(function(data){
+			$scope.ver = true;
 			$scope.respuesta = 'Datos guardados!';
-
-
-			// lo mando para el panel
-			$timeout(function(){
-				$location.path('/panel');
-			}, 2000);
-		  }
+			// upload(fd);
+		})
+		.error(function(response){
+			// si ha habido errors, llegaremos a esta función 
+			console.log('ERROR');
 		});
 	}
 
@@ -256,7 +178,7 @@ app.controller('panelController', ['$scope', '$http', 'localStorageService', 'Me
 	        headers: {'Content-Type': undefined}
 	        })
 	        .success(function(response){
-				console.log('Respuesta: '+response);
+				console.log('Respuesta del server: '+response);
 	        })
 	        .error(function(response){
 	    });
@@ -312,80 +234,6 @@ app.controller('panelController', ['$scope', '$http', 'localStorageService', 'Me
 	}
 
 }]); //fin controler panel
-
-
-
-
-
-// controllador para mostrar los pedidos en la cocina
-app.controller('pedidosController', ['$scope', 'Pedidos', '$timeout', '$firebaseArray', function($scope, Pedidos, $timeout, $firebaseArray){
-	
-	
-		var pedidos = new Firebase("https://tucocina.firebaseio.com/pedidos");
-		pedidos.on("child_added", function(snapshot, prevChildKey) {
-			var newPedido = snapshot.val();
-
-			var options = {
-			    body: "Se ha realizado un pedio desde la mesa " + newPedido.mesa,
-			    icon: "public/img/doh.png"
-			};
-		 
-			var notif = new Notification("Nuevo Pedido", options);
-
-			notif.onshow = function() { 
-				var sonido = document.getElementById("sound"); 
-				 sonido.play(); 
-
-				$timeout(function () {
-					notif.close();
-				}, 5000);
-			}
-			
-		});
-
-		$scope.pedidos = Pedidos;
-
-	
-	// $scope.pedidos = Pedidos;
-	console.log($scope.pedidos);
-
-	// habilito las notificaciones en el navegador
-	$scope.notification = function () {
-		console.log('Hola mundo!');
-    	 if (Notification) {
-        	Notification.requestPermission( function(status) {
-			    if (status == "granted"){
-			       var options = {
-				    body: "Se ha realizado un pedio desde la mesa 10",
-				    icon: "public/img/doh.png"
-					};
-				 
-					var notif = new Notification("Nuevo Pedido", options);
-					
-					$timeout(function () {
-						notif.close();
-					}, 5000);
-					// setTimeout(notif.close, 3000);
-				}
-			});
-    	}	
-	} // fin notification
-
-}]);
-
-
-
-
-
-
-// controlador para gestionar las promociones y platos del día
-app.controller('promoController', ['$scope', function(){
-	
-}]);
-
-
-
-
 
 
 

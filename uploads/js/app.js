@@ -9,12 +9,10 @@
 */
 
 // modulo principal de la aplicación
-var app = angular.module('tuCosina', ['tuCosina.controllers', 'tuCosina.services', 'angular-loading-bar']);
-
-app.constant('firebaseUrl', 'https://tucocina.firebaseio.com/');
+var app = angular.module('tuCosina', ['tuCosina.controllers', 'tuCosina.services']);
 
 // configuración de las rutas para la aplicación web
-app.config(function($stateProvider, $authProvider, $urlRouterProvider, firebaseUrl){
+app.config(function($stateProvider, $authProvider, $urlRouterProvider){
 	
 	// variables de configuracion para el envio de peticiones al server
 	$authProvider.authHeader = 'Authorization';
@@ -38,37 +36,7 @@ app.config(function($stateProvider, $authProvider, $urlRouterProvider, firebaseU
 		.state('panel',{
 			url: '/panel',
 			templateUrl:'partials/panel.html',
-			controller: 'panelController',
-			resolve:{
-				'currentAuth': ['$firebaseAuth', function($firebaseAuth){
-					// $requireAuth retorna promesa si esta autenticado, rechaza sino
-					var ref = new Firebase(firebaseUrl);
-					var authObj = $firebaseAuth(ref);
-
-					return authObj.$requireAuth();
-				}]
-			}
-		})
-
-		.state('pedidos',{
-			url: '/pedidos',
-			templateUrl:'partials/pedidos.html',
-			controller: 'pedidosController',
-			resolve:{
-				'currentAuth': ['$firebaseAuth', function($firebaseAuth){
-					// $requireAuth retorna promesa si esta autenticado, rechaza sino
-					var ref = new Firebase(firebaseUrl);
-					var authObj = $firebaseAuth(ref);
-
-					return authObj.$requireAuth();
-				}]
-			}
-		})
-
-		.state('promo', {
-			url: '/promo',
-			templateUrl: 'partials/promociones.html',
-			controller: 'promoController'
+			controller: 'panelController'
 		})
 
 		.state('login', {
