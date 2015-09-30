@@ -13,14 +13,14 @@
 
 
 <div class="row admin">
-	<div class="col-md-12">
-		<div class="panel panel-primary">
+	<div class="col-md-4">
+		<div class="panel panel-default">
 			<div class="panel-heading">Gestión de Promociones</div>
 			<div class="panel-body">
 				<h1>Plato del día</h1>
-				<button class="btn btn-warning">Agregar plato del día</button>
+				<button class="btn btn-warning" data-toggle="modal" data-target="#plato-del-dia">Agregar plato del día</button>
 				<div class="table-responsive">
-					<table class="table">
+					<table class="table tabla">
 						<thead>
 							<tr>
 								<th>#</th>
@@ -30,10 +30,10 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>Patacones</td>
-								<td>$10.000</td>
+							<tr ng-repeat="promo in promos">
+								<td>{{$index + 1}}</td>
+								<td>{{promo.nombrePlato}}</td>
+								<td><span class="badge">${{promo.precioPlato}}</span></td>
 								<td><button class="btn btn-danger">Activar</button></td>
 							</tr>
 						</tbody>
@@ -42,4 +42,103 @@
 			</div>
 		</div>
 	</div>
+
+
+
+        <div class="col-md-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Gestión de Promociones</div>
+            <div class="panel-body">
+                <h1>Promociones</h1>
+                <button class="btn btn-warning" data-toggle="modal" data-target="#promocion">Agregar promoción</button>
+                <div class="table-responsive">
+                    <table class="table tabla">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Imagen</th>
+                                <th>Accion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="promoImg in promosImg">
+                                <td>{{$index + 1}}</td>
+                                <td>{{promoImg.imagen_promo}}</td>
+                                <td><button class="btn btn-danger">Eliminar</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal" id="plato-del-dia">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Agregar plato del día</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="nomre">Nombre del plato</label>
+                        <input ng-model="nombrePlato" type="text" class="form-control" id="nombre" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nomre">Precio</label>
+                        <input ng-model="precioPlato" type="text" class="form-control" id="nombre" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="imagen">Imagen</label>
+                        <input file-model="imagen" type="file" class="form-control" id="imagen" />
+                    </div>
+                </form>
+
+                <div class="alert alert-dismissable alert-success" ng-show="ver">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{respuesta_promo}} </strong>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="addPromo()">Guardar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- agreagr promocion -->
+
+<div class="modal" id="promocion">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Agregar nueva promocion</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="imagen">Imagen</label>
+                        <input file-model="imagen_promo" type="file" class="form-control" id="imagen" />
+                    </div>
+                </form>
+
+                <div class="alert alert-dismissable alert-success" ng-show="ver">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{respuesta_promo_img}} </strong>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="addImgPromo()">Subir</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
 </div>

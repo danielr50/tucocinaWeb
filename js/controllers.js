@@ -57,10 +57,11 @@ app.controller('loginController', ['$scope', '$auth', '$location', 'localStorage
 	// definir funcion init()
 	function init(){
 		authObj.$onAuth(authDataCallback);
-		if(authObj.$getAuth()){
+		if(!authObj.$getAuth()){
+			$location.path('/login');
+		}else{
 			$scope.isLoggedIn = true;
 			$scope.rol  = "Autoservicio";
-			$location.path('/panel');
 		}
 	}
 
@@ -379,8 +380,67 @@ app.controller('pedidosController', ['$scope', 'Pedidos', '$timeout', '$firebase
 
 
 // controlador para gestionar las promociones y platos del día
-app.controller('promoController', ['$scope', function(){
+app.controller('promoController', ['$scope', 'Promos', 'imgPromos', '$http', 'localStorageService', function($scope, Promos, imgPromos, $http, localStorageService){
+	$scope.ver= false;
+
+	$scope.promos = Promos;
+	$scope.promosImg = imgPromos;
+
+	$scope.addPromo = function(){
+		var id_user = localStorageService.get('idUser');
+
+		// preparo la imagen
+		var file = $scope.imagen;
+        var fd = new FormData();
+        fd.append('imagen_promo', file);
+
+		var promo = {
+			id_user: id_user,
+			nombrePlato: $scope.nombrePlato,
+			precioPlato: $scope.precioPlato,
+			imagen: file.name
+		};
+
+		Promos.$add(promo);
+		upload(fd);
+
+		$scope.ver= true;
+		$scope.respuesta_promo = "Promo agregada con éxito!";
+	};
+
+	$scope.addImgPromo = function(){
+		var id_user = localStorageService.get('idUser');
+		// preparo la imagen
+		var file = $scope.imagen_promo;
+		var fd = new FormData();
+		fd.append('imagen_promo', file);
+
+		imgPromos.$add({
+			id_user: id_user,
+			imagen_promo: file.name
+		});
+
+		upload(fd);
+		$scope.ver= true;
+		$scope.respuesta_promo_img = "Promo agregada con éxito!";
 	
+	};
+
+
+	// funcion para guardar las imagenes de las promociones
+	function upload (form) {
+		$http.post('http://tucocinavirtual.com/test/uploads-promo.php',form, {
+		    transformRequest: angular.identity, 
+	        headers: {'Content-Type': undefined}
+	        })
+	        .success(function(response){
+				console.log('Respuesta: '+response);
+	        })
+	        .error(function(response){
+	        	console.log('response');
+	    });
+	};
+
 }]);
 
 

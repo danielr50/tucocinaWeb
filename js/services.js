@@ -59,13 +59,21 @@ app.factory("Pedidos", function($firebaseArray){
 	return $firebaseArray(pedidos);
 });
 
-
 // usuarios
 app.factory("Restaurantes", function($firebaseArray){
 	var rest = new Firebase("https://tucocina.firebaseio.com/restaurantes");
 	return $firebaseArray(rest);
 });
 
+// promo
+app.factory("Promos", function($firebaseArray){
+	var promos = new Firebase("https://tucocina.firebaseio.com/promos");
+	return $firebaseArray(promos);
+});
 
+app.factory("imgPromos", function($firebaseArray){
+	var img_promos = new Firebase("https://tucocina.firebaseio.com/img_promos");
+	return $firebaseArray(img_promos);
+});
 
 

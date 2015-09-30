@@ -68,7 +68,16 @@ app.config(function($stateProvider, $authProvider, $urlRouterProvider, firebaseU
 		.state('promo', {
 			url: '/promo',
 			templateUrl: 'partials/promociones.html',
-			controller: 'promoController'
+			controller: 'promoController',
+			resolve:{
+				'currentAuth': ['$firebaseAuth', function($firebaseAuth){
+					// $requireAuth retorna promesa si esta autenticado, rechaza sino
+					var ref = new Firebase(firebaseUrl);
+					var authObj = $firebaseAuth(ref);
+
+					return authObj.$requireAuth();
+				}]
+			}
 		})
 
 		.state('login', {
