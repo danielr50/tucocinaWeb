@@ -344,11 +344,35 @@ app.controller('pedidosController', ['$scope', 'Pedidos', '$timeout', '$firebase
 			
 		});
 
-		$scope.pedidos = Pedidos;
+		$timeout(function () {
+			$scope.pedidos = Pedidos;
+
+			// $scope.ingredientes = Pedidos[0].ingredientes[0];
+			// $scope.adicionales = Pedidos[0].adicionales[0];
+			console.log(Pedidos.length);
+			
+
+			// var test = new Array();
+
+			// for (var i =0;  i<= Pedidos.length; i++) {
+			// 	console.log('valor de i: '+i);
+			// 	for (var k =0;  k<= Pedidos[i].ingredientes[0].length; k++) {
+			// 		test.push(Pedidos[i].ingredientes[k]);
+			// 		console.log(test.filter(Boolean));
+			// 	};
+			// };
+
+		}, 5000);
+
+		// console.log(Pedidos.ingredientes);
+
+		// for (var i = $scope.pedidos.ingredientes.length - 1; i >= 0; i--) {
+		// 	$scope.pedidos.ingredientes[i]
+		// };
 
 	
 	// $scope.pedidos = Pedidos;
-	console.log($scope.pedidos);
+	// console.log($scope.pedidos);
 
 	// habilito las notificaciones en el navegador
 	$scope.notification = function () {

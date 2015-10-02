@@ -56,13 +56,13 @@
 						</thead>
 						<tbody>
 							<tr ng-repeat="pedido in pedidos">
-								<td>{{$index + 1}}</td>
-								<td>{{pedido[$index + 1].plato}}</td>
+								<td>{{$index+1}}</td>
+								<td>{{pedido.plato}}</td>
 								<td><span class="badge">{{pedido.mesa}}</span></td>
-								<td><span class="label label-success">${{pedido[$index + 1].precio}}</span></td>
-								<td>{{pedido[$index + 1].ingredientes}}</td>
-								<td>{{pedido[$index + 1].adicionales}}</td>
-								<td><button class="btn btn-warning">Procesar</button></td>
+								<td><span class="label label-success">${{pedido.precio}}</span></td>
+								<td><span ng-repeat="ingrediente in pedido.ingredientes" class="badge">{{ingrediente}}</span></td>
+								<td><span ng-repeat="adicional in pedido.adicionales" class="badge">{{adicional}}</span></td>
+								<td><button class="btn btn-warning">Listo</button></td>
 							</tr>
 						</tbody>
 					</table>
