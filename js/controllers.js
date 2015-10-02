@@ -205,6 +205,9 @@ app.controller('panelController', ['$scope', '$http', 'localStorageService', 'Me
 
 	// function para agregar un nuevo plato
 	$scope.addPlato = function(){
+
+		var id_user = localStorageService.get('idUser');
+
 		// preparo la imagen
 		var file = $scope.imagen;
         var fd = new FormData();
@@ -212,10 +215,11 @@ app.controller('panelController', ['$scope', '$http', 'localStorageService', 'Me
 
         // objeto plato
 		$scope.platos.$add({
+			id_user: id_user,
 			nombrePlato: $scope.nombrePlato,
 			descripcion: $scope.descripcion,
 			valor: $scope.valor,
-			estado: $scope.estado,
+			promo: $scope.estado,
 			idCategoria: $scope.categoria,
 			imagen: file.name
 		});
@@ -400,37 +404,31 @@ app.controller('pedidosController', ['$scope', 'Pedidos', '$timeout', '$firebase
 
 
 
-
-
-
 // controlador para gestionar las promociones y platos del día
-app.controller('promoController', ['$scope', 'Promos', 'imgPromos', '$http', 'localStorageService', function($scope, Promos, imgPromos, $http, localStorageService){
+app.controller('promoController', ['$scope', 'Promos', 'imgPromos', '$http', 'localStorageService', 'Ingredientes', 'Adicionales', function($scope, Promos, imgPromos, $http, localStorageService, Ingredientes, Adicionales){
 	$scope.ver= false;
 
-	$scope.promos = Promos;
+	// $scope.promos = Promos;
 	$scope.promosImg = imgPromos;
 
-	$scope.addPromo = function(){
-		var id_user = localStorageService.get('idUser');
+	var id_user = localStorageService.get('idUser');
 
-		// preparo la imagen
-		var file = $scope.imagen;
-        var fd = new FormData();
-        fd.append('imagen_promo', file);
+	var count = 0;
+	var prom = [];
 
-		var promo = {
-			id_user: id_user,
-			nombrePlato: $scope.nombrePlato,
-			precioPlato: $scope.precioPlato,
-			imagen: file.name
-		};
+	var promos = new Firebase("https://tucocina.firebaseio.com/platos/");
+	promos.orderByChild("id_user").equalTo(id_user).on("child_added", function(snapshot) {
+		count++;
+		prom[count] = snapshot.val();
+		prom[count].$id = snapshot.key();
 
-		Promos.$add(promo);
-		upload(fd);
 
-		$scope.ver= true;
-		$scope.respuesta_promo = "Promo agregada con éxito!";
-	};
+		$scope.promos = prom.filter(Boolean);
+		console.log('Promosciones');
+		console.log($scope.promos);
+	});
+
+
 
 	$scope.addImgPromo = function(){
 		var id_user = localStorageService.get('idUser');
@@ -449,6 +447,43 @@ app.controller('promoController', ['$scope', 'Promos', 'imgPromos', '$http', 'lo
 		$scope.respuesta_promo_img = "Promo agregada con éxito!";
 	
 	};
+
+
+	// cargo los ingredientes de un plato
+	$scope.ingredientesLoad = function(idPlato){
+		$scope.ingredientes = null;
+		localStorageService.set('idPlato', idPlato);
+
+		console.log(idPlato);
+
+		var count = 0;
+		var ing = [];
+
+		var ingre = new Firebase("https://tucocina.firebaseio.com/ingredientes/");
+		ingre.orderByChild("idPlato").equalTo(idPlato).on("child_added", function(snapshot) {
+			count++;
+			ing[count] = snapshot.val();
+			$scope.ingredientes = ing.filter(Boolean);
+			console.log('Ingredientes');
+			console.log($scope.ingredientes);
+		});
+	}
+
+	// cargo los adiconales de un plato
+	$scope.adicionalesLoad = function(idPlato){
+		$scope.adicionales = null;
+		localStorageService.set('idPlato', idPlato);
+		
+		var count = 0;
+		var adi = [];
+
+		var adicionales = new Firebase("https://tucocina.firebaseio.com/adicionales/");
+		adicionales.orderByChild("idPlato").equalTo(idPlato).on("child_added", function(snapshot) {
+			count++;
+			adi[count] = snapshot.val();
+			$scope.adicionales = adi.filter(Boolean);
+		});
+	}
 
 
 	// funcion para guardar las imagenes de las promociones

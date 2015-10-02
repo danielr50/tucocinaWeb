@@ -13,28 +13,42 @@
 
 
 <div class="row admin">
-	<div class="col-md-4">
+	<div class="col-md-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">Gestión de Promociones</div>
 			<div class="panel-body">
 				<h1>Plato del día</h1>
-				<button class="btn btn-warning" data-toggle="modal" data-target="#plato-del-dia">Agregar plato del día</button>
+				<!-- <button class="btn btn-warning" data-toggle="modal" data-target="#plato-del-dia">Agregar plato del día</button> -->
 				<div class="table-responsive">
 					<table class="table tabla">
 						<thead>
 							<tr>
-								<th>#</th>
-								<th>Plato</th>
-								<th>Precio</th>
-								<th>Accion</th>
+								<tr>
+                                    <th>#</th>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Descripción</th>
+                                    <th>Valor</th>
+                                    <!-- <th>Categoría</th> -->
+                                    <th>Ingredientes</th>
+                                    <th>Adicionales</th>
+                                    <!-- <th>Estado</th> -->
+                                    <th>Editar</th>
+                                </tr>
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="promo in promos">
+							<tr ng-repeat="promo in promos | filter:'Plato del dia'">
 								<td>{{$index + 1}}</td>
-								<td>{{promo.nombrePlato}}</td>
-								<td><span class="badge">${{promo.precioPlato}}</span></td>
-								<td><button class="btn btn-danger">Activar</button></td>
+                                <td><img class="imagen-plato" ng-src="http://tucocinavirtual.com/test/uploads/{{promo.imagen}}"></td>
+                                <td>{{promo.nombrePlato}}</td>
+                                <td>{{promo.descripcion}}</td>
+                                <td><span class="label label-success">${{promo.precioPlato}}</span></td>
+                                <!-- <td>{{promo.idCategoria.nombreCategoria}}</td> -->
+                                <td><a href="" ng-click="ingredientesLoad(promo.$id)" data-toggle="modal" data-target="#ingredientes">Ingredientes</a></td>
+                                <td><a href="" ng-click="adicionalesLoad(promo.$id)" data-toggle="modal" data-target="#adicionales">Adicionales</a></td>
+                                <!-- <td><span class="label label-success">{{promo.estado}}</span></td> -->
+                                <td><button class="btn btn-success btn-sm" data-toggle="modal" data-target="#edit-promo">Editar</button></td>
 							</tr>
 						</tbody>
 					</table>
@@ -42,10 +56,10 @@
 			</div>
 		</div>
 	</div>
+</div>
 
-
-
-        <div class="col-md-8">
+<div class="row admin">
+        <div class="col-md-12">
         <div class="panel panel-primary">
             <div class="panel-heading">Gestión de Promociones</div>
             <div class="panel-body">
@@ -72,47 +86,111 @@
             </div>
         </div>
     </div>
-</div>
+</div>    
 
 
-
-
-<div class="modal" id="plato-del-dia">
-    <div class="modal-dialog">
+<div class="modal" id="ingredientes">
+    <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Agregar plato del día</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Ingredientes</h4>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="nomre">Nombre del plato</label>
-                        <input ng-model="nombrePlato" type="text" class="form-control" id="nombre" />
+                        <label for="nombre">Nombre ingrediente</label>
+                        <input ng-model="nombreIngrediente" type="text" class="form-control" id="nombre" />
                     </div>
-
                     <div class="form-group">
-                        <label for="nomre">Precio</label>
-                        <input ng-model="precioPlato" type="text" class="form-control" id="nombre" />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="imagen">Imagen</label>
-                        <input file-model="imagen" type="file" class="form-control" id="imagen" />
+                        <button type="button" class="btn btn-primary" ng-click="addIngrediente()">Guardar</button>
                     </div>
                 </form>
-
-                <div class="alert alert-dismissable alert-success" ng-show="ver">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>{{respuesta_promo}} </strong>
+                <!-- <p>Actualizar plato</p> -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">Listado de ingredientes</div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre</th>
+                                    <th>Editar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="ingrediente in ingredientes">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{ingrediente.nombreIngrediente}}</td>
+                                    <td><button class="btn btn-success btn-sm">Editar</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="addPromo()">Guardar</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal" id="adicionales">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Adicionales</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="form-group">
+                        <label >Nombre</label>
+                        <input ng-model="nombreAdicional" type="text" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Valor</label>
+                        <input ng-model="valorAdicional" type="text" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" ng-click="addAdicional()">Guardar</button>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Listado de adicionales</div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre</th>
+                                    <th>valor</th>
+                                    <th>Editar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="adicional in adicionales">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{adicional.nombreAdicional}}</td>
+                                    <td>{{adicional.valor}}</td>
+                                    <td><button class="btn btn-success btn-sm">Editar</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 <!-- agreagr promocion -->
 

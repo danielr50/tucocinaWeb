@@ -47,11 +47,13 @@ app.factory("Ingredientes", function($firebaseArray) {
 	return $firebaseArray(ingredientes);
 });
 
+
 // servicio para gestionar los adicionales
 app.factory("Adicionales", function($firebaseArray) {
 	var adicionales = new Firebase("https://tucocina.firebaseio.com/adicionales");
 	return $firebaseArray(adicionales);
 });
+
 
 // factoria que retorna los pedidos de un restarante - PRUEBAS
 app.factory("Pedidos", function($firebaseArray){
@@ -65,9 +67,23 @@ app.factory("Restaurantes", function($firebaseArray){
 	return $firebaseArray(rest);
 });
 
+
+// *****************************************************
+// PROMOS
+
+app.factory("IngredientesPromo", function($firebaseArray) {
+	var ingredientes_promo = new Firebase("https://tucocina.firebaseio.com/ingredientes_promo");
+	return $firebaseArray(ingredientes_promo);
+});
+
+app.factory("AdicionalesPromo", function($firebaseArray) {
+	var adicionales_promo = new Firebase("https://tucocina.firebaseio.com/adicionales_promo");
+	return $firebaseArray(adicionales_promo);
+});
+
 // promo
 app.factory("Promos", function($firebaseArray){
-	var promos = new Firebase("https://tucocina.firebaseio.com/promos");
+	var promos = new Firebase("https://tucocina.firebaseio.com/platos");
 	return $firebaseArray(promos);
 });
 
